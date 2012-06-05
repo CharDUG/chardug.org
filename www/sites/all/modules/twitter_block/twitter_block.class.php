@@ -12,11 +12,11 @@
  */
 
 /**
- * TwitterSearch provides the class for using the Twitter Search API.
+ * TwitterBlockSearch provides the class for using the Twitter Search API.
  *
- * For mor information on the API, see http://dev.twitter.com/doc/get/search
+ * For more information on the API, see http://dev.twitter.com/doc/get/search
  */
-class TwitterSearch {
+class TwitterBlockSearch {
 
   // HTTP status code returned
   private $http_status;
@@ -31,26 +31,33 @@ class TwitterSearch {
   private $search_string;
   private $twitter_name;
 
+  // The API type we'll pull data from.
+  private $api;
+
   // The url including the encoded query
   public $url_query;
 
   public function __construct($config = array()) {
+    // @todo: Make this a configurable URL.
+    $this->url_query = 'http://search.twitter.com/search.json?';
     $this->search_type = $config['search_type'];
-    
-    if ( $config['search_type'] == 'searchHashtag' ) {
-      // We presume the search string is already validated. 
+    $this->api = in_array($this->search_type, array('getTweetsFrom')) ? 'rest' : 'search';
+
+    if ($config['search_type'] == 'searchHashtag') {
+      // We presume the search string is already validated.
       $this->search_string = $config['search_string'];
     }
     else {
       $this->twitter_name = $config['search_string'];
     }
 
+    $count = ($this->api == 'rest') ? 'count' : 'rpp';
     // The number of tweets to return per page.
-    if ( !empty( $config['results_per_page']) ) {
-      $this->options['rpp'] = $config['results_per_page'];
+    if (!empty($config['results_per_page'])) {
+      $this->options[$count] = $config['results_per_page'];
     }
     else {
-      $this->options['rpp'] = variable_get('twitter_block_default_results_per_page', 15);
+      $this->options[$count] = variable_get('twitter_block_default_results_per_page', 15);
     }
 
     // Filter by language, but only if there is one set in the config.
@@ -63,7 +70,36 @@ class TwitterSearch {
    * Retrieve JSON encoded search results
    */
   public function getJSON() {
-    return call_user_func(array($this, $this->search_type)); 
+    $response = call_user_func(array($this, $this->search_type));
+    $return = array(
+      'status' => TRUE,
+      'results' => array(),
+      'debug' => $response,
+    );
+    if (empty($response)) {
+      $return['status'] = 'Empty response from Twitter.';
+    }
+    else {
+      $decoded = json_decode($response);
+      if (empty($decoded)) {
+        $return['status'] = 'Response from Twitter is not valid JSON data.';
+      }
+      elseif ($this->api == 'rest') {
+        $data = $decoded;
+      }
+      else {
+        $data = $decoded->results;
+      }
+      // An error from the API.
+      if (!empty($data->error)) {
+        $return['status'] = $data->error;
+      }
+      // Everything was ok.
+      else {
+        $return['results'] = $data;
+      }
+    }
+    return $return;
   }
 
   /**
@@ -72,7 +108,9 @@ class TwitterSearch {
    * @return string $json JSON encoded search response
    */
   private function getTweetsFrom() {
-    $this->options['q'] = "from:$this->twitter_name";
+    $this->options['screen_name'] = $this->twitter_name;
+    // @todo: Make this URL a configurable option.
+    $this->url_query = 'http://api.twitter.com/1/statuses/user_timeline.json?';
     $json = $this->search();
     return $json;
   }
@@ -123,9 +161,9 @@ class TwitterSearch {
    * @return string JSON encoded search response.
    */
   function search() {
-    $this->url_query = 'http://search.twitter.com/search.json?' . http_build_query($this->options);
+    $this->url_query .= drupal_http_build_query($this->options);
     $ch = curl_init($this->url_query);
-    
+
     // Applications must have a meaningful and unique User Agent. 
     curl_setopt($ch, CURLOPT_USERAGENT, "Drupal Twitter Block Module");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -138,5 +176,8 @@ class TwitterSearch {
 
     return $twitter_data;
   }
+
+  function getApi() {
+    return $this->api;
+  }
 }
-?>

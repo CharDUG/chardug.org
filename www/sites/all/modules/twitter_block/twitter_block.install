@@ -2,11 +2,32 @@
 
 /**
  * @file
- * Install, update and uninstal functions for the twitter_block module
+ * Install, update and uninstall functions for the twitter_block module.
  */
 
 /**
- * Implements hook_schema
+ * Implements hook_requirements().
+ */
+function twitter_block_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+
+  $has_curl = function_exists('curl_init');
+
+  $requirements['curl'] = array(
+    'title' => $t('cURL'),
+    'value' => $has_curl ? $t('Enabled') : $t('Not found'),
+  );
+  if (!$has_curl) {
+    $requirements['curl']['severity'] = REQUIREMENT_ERROR;
+    $requirements['curl']['description'] = $t('The testing framework could not be installed because the PHP <a href="@curl_url">cURL</a> library is not available.', array('@curl_url' => 'http://php.net/manual/en/curl.setup.php'));
+  }
+
+  return $requirements;
+}
+
+/**
+ * Implements hook_schema().
  */
 function twitter_block_schema() {
   $schema['twitter_block'] = array(
@@ -77,7 +98,6 @@ function twitter_block_install() {
     ))
     ->execute();
 }
-
 
 /**
  * Implements hook_uninstall().
