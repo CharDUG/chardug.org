@@ -38,6 +38,7 @@ class views_plugin_pager_full extends views_plugin_pager {
    * Provide the default form for setting options.
    */
   function options_form(&$form, &$form_state) {
+    parent::options_form($form, $form_state);
     $pager_text = $this->display->handler->get_pager_text();
     $form['items_per_page'] = array(
       '#title' => $pager_text['items per page title'],
@@ -164,6 +165,16 @@ class views_plugin_pager_full extends views_plugin_pager {
     if ($error) {
       form_set_error('pager_options][expose][items_per_page_options', t('Please insert a list of integer numeric values separated by commas: e.g: 10, 20, 50, 100'));
     }
+
+    // Take sure that the items_per_page is part of the expose settings.
+    if (!empty($form_state['values']['pager_options']['expose']['items_per_page']) && !empty($form_state['values']['pager_options']['items_per_page'])) {
+      $items_per_page = $form_state['values']['pager_options']['items_per_page'];
+      if (array_search($items_per_page, $options) === FALSE) {
+        form_set_error('pager_options][expose][items_per_page_options', t('Please insert the items per page (@items_per_page) from above.',
+          array('@items_per_page' => $items_per_page))
+        );
+      }
+    }
   }
 
   function query() {
@@ -214,16 +225,24 @@ class views_plugin_pager_full extends views_plugin_pager {
       return;
     }
 
-    // If the current page number was not prespecified, default to pulling it from 'page'
-    // based upon
+    // If the current page number was not specified, extract it from the global
+    // page array.
     global $pager_page_array;
-    // Extract the ['page'] info.
-    $pager_page_array = isset($_GET['page']) ? explode(',', $_GET['page']) : array(0);
 
-    $this->current_page = 0;
-    if (!empty($pager_page_array[$this->options['id']])) {
-      $this->current_page = intval($pager_page_array[$this->options['id']]);
+    if (empty($pager_page_array)) {
+      $pager_page_array = array();
     }
+
+    // Fill in missing values in the global page array, in case the global page
+    // array hasn't been initialized before.
+    $page = isset($_GET['page']) ? explode(',', $_GET['page']) : array();
+
+    for ($i = 0; $i <= $this->options['id'] || $i < count($pager_page_array); $i++) {
+      $pager_page_array[$i] = empty($page[$i]) ? 0 : $page[$i];
+    }
+
+    $this->current_page = intval($pager_page_array[$this->options['id']]);
+
     if ($this->current_page < 0) {
       $this->current_page = 0;
     }
