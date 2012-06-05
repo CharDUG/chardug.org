@@ -13,7 +13,7 @@ function statistics_help($path, $arg) {
     case 'admin/help#statistics':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The Statistics module shows you how often a given page is viewed, who viewed it, the previous page the user visited (referrer URL), and when it was viewed. These statistics are useful in determining how users are visiting and navigating your site. For more information, see the online handbook entry for the <a href="@statistics">Statistics module</a>.', array('@statistics' => url('http://drupal.org/handbook/modules/statistics/'))) . '</p>';
+      $output .= '<p>' . t('The Statistics module shows you how often a given page is viewed, who viewed it, the previous page the user visited (referrer URL), and when it was viewed. These statistics are useful in determining how users are visiting and navigating your site. For more information, see the online handbook entry for the <a href="@statistics">Statistics module</a>.', array('@statistics' => url('http://drupal.org/documentation/modules/statistics/'))) . '</p>';
       $output .= '<h3>' . t('Uses') . '</h3>';
       $output .= '<dl>';
       $output .= '<dt>' . t('Managing logs') . '</dt>';
@@ -75,11 +75,14 @@ function statistics_exit() {
   }
   if (variable_get('statistics_enable_access_log', 0)) {
     drupal_bootstrap(DRUPAL_BOOTSTRAP_SESSION);
+
+    // For anonymous users unicode.inc will not have been loaded.
+    include_once DRUPAL_ROOT . '/includes/unicode.inc';
     // Log this page access.
     db_insert('accesslog')
       ->fields(array(
-        'title' => strip_tags(drupal_get_title()),
-        'path' => $_GET['q'],
+        'title' => truncate_utf8(strip_tags(drupal_get_title()), 255),
+        'path' => truncate_utf8($_GET['q'], 255),
         'url' => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '',
         'hostname' => ip_address(),
         'uid' => $user->uid,
