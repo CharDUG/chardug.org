@@ -1,14 +1,15 @@
-name = Twitter Block module
+name = Twitter Block
 description = "Provides configurable blocks for a Twitter feed."
 core = 7.x
 
-files[] = twitter.class.inc
+files[] = twitter_block.class.php
 files[] = twitter_block.test
-files[] = twitter_block.css
 
-; Information added by drupal.org packaging script on 2011-04-22
-version = "7.x-1.0-beta1"
+stylesheets[all][] = twitter_block.css
+
+; Information added by drupal.org packaging script on 2012-03-24
+version = "7.x-1.0"
 core = "7.x"
 project = "twitter_block"
-datestamp = "1303440716"
+datestamp = "1332561647"
 
