@@ -1,0 +1,16 @@
+base theme = boron
+name =  CharDUG
+description = Custom theme for CharDUG.org
+core = 7.x
+engine =  phptemplate
+
+;CSS
+stylesheets[all][] = css/style.css
+
+;JS
+scripts[] = js/plugin.js
+scripts[] = js/script.js
+
+;Regions
+regions[sidebar_first] = Sidebar
+regions[content] = Main Content
