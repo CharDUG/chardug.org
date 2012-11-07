@@ -316,14 +316,16 @@ header #gallery img{
 	-webkit-box-sizing: border-box; 
 	box-sizing: border-box;
 }
-
+.tabs {
+  margin-top: 25px;
+}
 .node-article{
 	border-bottom: 1px dashed #333;
 	margin-bottom: 15px;
 	padding-bottom: 15px;
 	width: 100%;
 }
-.node-article-content{
+.node-content{
 	-moz-box-sizing: border-box; 
 	-webkit-box-sizing: border-box; 
 	box-sizing: border-box;
@@ -379,7 +381,7 @@ header #gallery img{
 	left: 0px;
 	top: 0px;
 }
-.meta span{
+.meta .authoring {
 	color: #888;
 	font-size: 11px;
 	padding-left: 8px;
@@ -405,18 +407,18 @@ header #gallery img{
   transition: all .5s ease;
 	width: 100%;
 }
-.node-article .link-wrapper .button{
+.link-wrapper .actions a{
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	color: #fff;
 	display: block;
-	margin: 0 auto 7px;
+  margin: 10px auto 15px;
+  max-width: 300px;
 	text-align: center;
-	width: 100%;
-	max-width: 300px;
+  width: 100%;
 }
-.node-article .link-wrapper .button:hover{
+.:hover{
 	text-decoration: none;
 }
 .node-article .link-wrapper h3{
@@ -500,7 +502,9 @@ header #gallery img{
 
 
 /* Button Styles */
-.button, .form-submit {
+.button, 
+.form-submit,
+.link-wrapper .actions a {
    border-top: 1px solid #4881ad;
    background: #242424;
    background: -webkit-gradient(linear, left top, left bottom, from(#4a4a4a), to(#242424));
@@ -525,7 +529,10 @@ header #gallery img{
    border-right: none;
    border-bottom: none;
 }
-.button:hover, .form-submit:hover {
+
+.button:hover, 
+.form-submit:hover,
+.node-article .link-wrapper a:hover {
    border-top-color: #4881ad;
    background: #4881ad;
    color: #ccc;
