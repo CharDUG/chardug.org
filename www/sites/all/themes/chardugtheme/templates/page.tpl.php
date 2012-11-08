@@ -2,7 +2,7 @@
   <div id="container">
     <header>
 		<div id="logo">
-      <a href="http://google.com/" title="<?php print t('Home'); ?>" rel="home">
+      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home">
         <img src="<?php print $logo; ?>" />
       </a>
 		</div><!-- #logo -->

@@ -435,6 +435,9 @@ header #gallery img{
 }
 
 /* Aside - BGs */
+#aside {
+  width: 30%;
+}
 #aside .block{
 	background: -moz-linear-gradient(top,  rgba(184,184,184,0.3) 0%, rgba(0,0,0,0) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(184,184,184,0.3)), color-stop(100%,rgba(0,0,0,0)));
@@ -693,13 +696,15 @@ footer{
 	#main{
 		margin-top: -184px;
 	}
+  #aside {
+    width: 28%;
+  }
 	#aside .block{
 		-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 		-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 		box-sizing: border-box;         /* Opera/IE 8+ */
 		float: left;
 		margin: 0 5% 15px 0;
-		width: 28%;
 	}
 	#aside .block-twitter-block{
 		margin-left: 3%;
@@ -785,8 +790,10 @@ footer{
 		width: 65%;
 		float: right;
 	}
+  #aside {
+    width: 30%;
+  }
 	#aside .block{
-		width: 30%;
 		margin: 0 5px 15px;
 	}
 	footer{
@@ -883,8 +890,10 @@ footer{
 	  transition: all .5s ease;
 	  width: 16%;
 	}
+  #aside {
+    width: 30%;
+  }
 	#aside .block{
-		width: 30%;
 		margin: 0 0 15px;
 	}
 }
