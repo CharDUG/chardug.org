@@ -321,7 +321,7 @@ header #gallery img{
 .tabs {
   margin-top: 25px;
 }
-.node-article{
+.node {
 	border-bottom: 1px dashed #333;
 	margin-bottom: 15px;
 	padding-bottom: 15px;
@@ -390,7 +390,7 @@ header #gallery img{
 	line-height: 24px;
 }
 
-.node-article .link-wrapper{
+.node .link-wrapper{
 	background: -moz-linear-gradient(top,  rgba(184,184,184,0.3) 0%, rgba(0,0,0,0) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(184,184,184,0.3)), color-stop(100%,rgba(0,0,0,0)));
 	background: -webkit-linear-gradient(top,  rgba(184,184,184,0.3) 0%,rgba(0,0,0,0) 100%);
@@ -423,14 +423,14 @@ header #gallery img{
 .:hover{
 	text-decoration: none;
 }
-.node-article .link-wrapper h3{
+.node .link-wrapper h3{
 	margin-bottom: 3px;
 	margin-top: 0px;
 }
-.node-article .link-wrapper ul{
+.node .link-wrapper ul{
 	margin: 0px;
 }
-.node-article .link-wrapper .field{
+.node .link-wrapper .field{
 	margin-bottom: 15px;
 }
 
@@ -537,7 +537,7 @@ header #gallery img{
 
 .button:hover, 
 .form-submit:hover,
-.node-article .link-wrapper a:hover {
+.node .link-wrapper a:hover {
    border-top-color: #4881ad;
    background: #4881ad;
    color: #ccc;
@@ -651,7 +651,7 @@ footer{
 		float: left;
 	}
   
-  .node-article .link-wrapper{
+  .node .link-wrapper{
 		float: right;
 		width: 25%;
 	}
