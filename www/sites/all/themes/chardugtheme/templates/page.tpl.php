@@ -26,13 +26,6 @@
         <?php if (!empty($tabs['#primary'])): ?><div class="tabs"><?php print render($tabs); ?></div><?php endif; ?>
         <?php print render($page['help']); ?>
         <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
-
-    		<div id="meet-up-info">
-    			<h2>CharDUG Meet Up, <span class="blue">1st Wed. of every month</span></h2>
-    			<p>This is a great chance to meet other Drupal
-developers and to hear about some of the cool Drupal projects people are working on in the area. No matter
-what level of Drupaler you are - pro or newbie - come on out to meet others in the community.</p>
-    		</div><!-- #meet-up-info -->
 			<div id="news">
          <?php print render($page['content']); ?>
 			</div><!-- #news -->
