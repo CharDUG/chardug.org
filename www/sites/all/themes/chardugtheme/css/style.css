@@ -337,7 +337,6 @@ header #gallery img{
 	margin-top: 15px;
 }
 .node-article .content .field-type-image img{
-  padding-top: 30px;
   width: 100%;
 	height: auto;
 }
@@ -795,6 +794,7 @@ footer{
 	#main-content{
 		width: 65%;
 		float: right;
+    padding-top: 30px;
 	}
 	#aside .block{
 		margin: 0 5px 15px;
