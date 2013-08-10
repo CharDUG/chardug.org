@@ -224,12 +224,6 @@ body{
   font-family: 'Cabin', sans-serif;
   font-size: 16px;
 }
-ul {
-	padding: 0px;
-}
-ul li {
-	list-style: none;
-}
 
 h2{
 	margin-bottom: 3px;
