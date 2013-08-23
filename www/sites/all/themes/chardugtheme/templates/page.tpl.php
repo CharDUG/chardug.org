@@ -36,7 +36,7 @@
     	</div>
     <footer>
       <?php print render($page['footer']); ?>
-  		&copy; CharDUG Charlotte Droupal Users Group
+  		&copy; CharDUG Charlotte Drupal Users Group
   </footer>
   </div> <!--! end of #container -->
 </div>
